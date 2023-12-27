@@ -1,9 +1,0 @@
-{
-  "ts-node": {
-    "swc": true
-  },
-  "compilerOptions": {
-    "resolveJsonModule": true,
-    "esModuleInterop": true
-  }
-}
