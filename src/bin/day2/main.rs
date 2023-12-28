@@ -45,6 +45,13 @@ impl Game {
     fn possible(&self) -> bool {
         self.rounds.iter().all(|round| round.possible())
     }
+
+    fn min_set_power(&self) -> u32 {
+        let max_blue = self.rounds.iter().max_by_key(|r| r.blue).unwrap().blue;
+        let max_green = self.rounds.iter().max_by_key(|r| r.green).unwrap().green;
+        let max_red = self.rounds.iter().max_by_key(|r| r.red).unwrap().red;
+        max_blue * max_green * max_red
+    }
 }
 
 impl Game {
@@ -62,12 +69,14 @@ impl Game {
 
 fn main() {
     let mut total = 0;
+    let mut min_powers_total = 0;
     for (i, line) in INPUT_FILE.lines().enumerate() {
         let game = Game::from_str(line, u32::try_from(i + 1).unwrap());
-        // println!("{:?}, {}", game, game.possible());
         if game.possible() {
             total += game.id;
         }
+        min_powers_total += game.min_set_power();
     }
-    println!("{}", total);
+    println!("Possible games: {}", total);
+    println!("Min powers: {}", min_powers_total);
 }
